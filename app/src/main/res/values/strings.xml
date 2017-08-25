@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AliPayUtils</string>
+
+
+    <string name="ali_pay">支付宝支付的封装</string>
+    <string name="to_pay_of_alipay">去支付宝付款</string>
+
+</resources>
