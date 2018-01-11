@@ -38,6 +38,7 @@ public class AliPayUtils {
 
     /**
      * 请求支付,创建订单信息
+     * *** 验证签名在客户端完成
      *
      * @param orderTitle  交易标题
      * @param orderNumber 订单号
@@ -72,6 +73,34 @@ public class AliPayUtils {
             }
         };
 
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
+
+    /**
+     * 请求支付
+     * ***验证签名已经在服务端完成
+     *
+     * @param orderInfo
+     */
+    public void requestPayFromServiceSide(final String orderInfo) {
+        Runnable payRunnable = new Runnable() {
+            @Override
+            public void run() {
+                //使用弱引用,确保activity不为null
+                Activity activity = mActivity.get();
+                if (activity == null) return;
+                // 构造PayTask 对象
+                PayTask alipay = new PayTask(activity);
+                // 调用支付接口，获取支付结果
+                Map<String, String> result = alipay.payV2(orderInfo, true);
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
         // 必须异步调用
         Thread payThread = new Thread(payRunnable);
         payThread.start();
