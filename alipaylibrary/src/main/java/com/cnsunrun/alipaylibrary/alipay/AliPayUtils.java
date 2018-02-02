@@ -2,6 +2,9 @@ package com.cnsunrun.alipaylibrary.alipay;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -9,6 +12,7 @@ import android.text.TextUtils;
 import com.alipay.sdk.app.PayTask;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -182,5 +186,22 @@ public class AliPayUtils {
         }
 
 
+    }
+
+    /**
+     * 判断是否安装的有支付宝软件
+     * @param context
+     * @return
+     */
+    public static boolean isExist(Context context) {
+        PackageManager manager = context.getPackageManager();
+        List<PackageInfo> pkgList = manager.getInstalledPackages(0);
+        for (int i = 0; i < pkgList.size(); i++) {
+            PackageInfo pI = pkgList.get(i);
+            //com.alipay.android.app 支付宝快捷服务
+            if (pI.packageName.equalsIgnoreCase("com.eg.android.AlipayGphone"))
+                return true;
+        }
+        return false;
     }
 }
