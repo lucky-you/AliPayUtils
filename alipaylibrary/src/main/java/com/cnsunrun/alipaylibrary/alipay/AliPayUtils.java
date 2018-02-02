@@ -23,11 +23,11 @@ import java.util.Map;
 public class AliPayUtils {
 
     // 商户PID
-    public String APP_ID = "";
+    private String APP_ID = "";
     //收款支付宝用户ID
-    public String SELLER_ID = "";
+    private String SELLER_ID = "";
     // 商户私钥，pkcs8格式，长度为2048
-    public String RSA_PRIVATE2 = "";
+    private String RSA_PRIVATE2 = "";
 
     private static final int SDK_PAY_FLAG = 1;
 
@@ -190,6 +190,7 @@ public class AliPayUtils {
 
     /**
      * 判断是否安装的有支付宝软件
+     *
      * @param context
      * @return
      */
