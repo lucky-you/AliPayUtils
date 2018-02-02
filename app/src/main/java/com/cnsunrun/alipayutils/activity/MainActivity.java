@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cnsunrun.alipayutils.R;
-import com.cnsunrun.alipayutils.alipay.AliPayUtils;
+import com.cnsunrun.alipaylibrary.alipay.AliPayUtils;
 import com.cnsunrun.alipayutils.utils.ConstantValue;
+import com.cnsunrun.alipayutils.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,19 +37,22 @@ public class MainActivity extends AppCompatActivity {
         String orderNumber = "2017080410248504";
         String totalPrice = "0.01";
         String urlCallback = ConstantValue.ALIPAY_URL_CALLBACK;
-        AliPayUtils alipay = new AliPayUtils(this);
+        String APP_ID = ConstantValue.ALI_APPID;
+        String SELLER_ID = ConstantValue.SELLER_ID;
+        String RSA_PRIVATE2 = ConstantValue.RSA_PRIVATE2;
+        AliPayUtils alipay = new AliPayUtils(APP_ID, SELLER_ID, RSA_PRIVATE2, this);
         alipay.requestPay(orderTitle, orderNumber, totalPrice, urlCallback);
         alipay.setPayListener(new AliPayUtils.OnAlipayListener() {
             @Override
             public void onSuccess() {
                 super.onSuccess();
-                Toast.makeText(MainActivity.this, "支付成功!", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "支付成功", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onCancel() {
                 super.onCancel();
-                Toast.makeText(MainActivity.this, "取消支付!", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "取消支付", Toast.LENGTH_LONG).show();
             }
         });
 

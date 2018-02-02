@@ -1,4 +1,4 @@
-package com.cnsunrun.alipayutils.alipay;
+package com.cnsunrun.alipaylibrary.alipay;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -7,7 +7,6 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
-import com.cnsunrun.alipayutils.utils.ConstantValue;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
@@ -20,11 +19,11 @@ import java.util.Map;
 public class AliPayUtils {
 
     // 商户PID
-    public static final String APP_ID = ConstantValue.ALI_APPID;
+    public String APP_ID = "";
     //收款支付宝用户ID
-    public static final String SELLER_ID = ConstantValue.SELLER_ID;
-    // 商户私钥，pkcs8格式
-    public static final String RSA_PRIVATE2 = ConstantValue.RSA_PRIVATE2;
+    public String SELLER_ID = "";
+    // 商户私钥，pkcs8格式，长度为2048
+    public String RSA_PRIVATE2 = "";
 
     private static final int SDK_PAY_FLAG = 1;
 
@@ -32,13 +31,25 @@ public class AliPayUtils {
 
     private OnAlipayListener mListener;
 
-    public AliPayUtils(Activity activity) {
+    /**
+     * 实际开发中，根据不同的项目，设置不同的APP_ID，SELLER_ID，RSA_PRIVATE2
+     *
+     * @param APP_ID
+     * @param SELLER_ID
+     * @param RSA_PRIVATE2
+     * @param activity
+     */
+    public AliPayUtils(String APP_ID, String SELLER_ID, String RSA_PRIVATE2, Activity activity) {
+        this.APP_ID = APP_ID;
+        this.SELLER_ID = SELLER_ID;
+        this.RSA_PRIVATE2 = RSA_PRIVATE2;
         mActivity = new WeakReference<Activity>(activity);
     }
 
     /**
      * 请求支付,创建订单信息
      * *** 验证签名在客户端完成
+     * 需要保证 APP_ID SELLER_ID RSA_PRIVATE2 正确
      *
      * @param orderTitle  交易标题
      * @param orderNumber 订单号
@@ -46,6 +57,9 @@ public class AliPayUtils {
      * @param urlCallback 回调地址
      */
     public void requestPay(String orderTitle, String orderNumber, String totalMoney, String urlCallback) {
+        if (TextUtils.isEmpty(APP_ID)) return;
+        if (TextUtils.isEmpty(SELLER_ID)) return;
+        if (TextUtils.isEmpty(RSA_PRIVATE2)) return;
 
         Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APP_ID, orderTitle, orderNumber, totalMoney, SELLER_ID, urlCallback);
 
@@ -82,7 +96,7 @@ public class AliPayUtils {
      * 请求支付
      * ***验证签名已经在服务端完成
      *
-     * @param orderInfo
+     * @param orderInfo 服务器返回的经过加签验证的字符串码
      */
     public void requestPayFromServiceSide(final String orderInfo) {
         Runnable payRunnable = new Runnable() {
