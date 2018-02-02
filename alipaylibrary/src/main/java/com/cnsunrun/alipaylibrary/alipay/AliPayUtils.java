@@ -50,6 +50,7 @@ public class AliPayUtils {
         mActivity = new WeakReference<Activity>(activity);
     }
 
+
     /**
      * 请求支付,创建订单信息
      * *** 验证签名在客户端完成
