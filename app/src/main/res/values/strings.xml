@@ -3,6 +3,7 @@
 
 
     <string name="ali_pay">支付宝支付的封装</string>
-    <string name="to_pay_of_alipay">去支付宝付款</string>
+    <string name="to_pay_of_alipay">去支付宝付款(客户端验签)</string>
+    <string name="to_pay_of_alipay_receser">去支付宝付款(服务端验签)</string>
 
 </resources>

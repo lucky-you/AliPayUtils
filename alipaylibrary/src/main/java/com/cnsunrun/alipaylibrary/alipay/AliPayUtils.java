@@ -36,7 +36,9 @@ public class AliPayUtils {
     private OnAlipayListener mListener;
 
     /**
+     * 构造方法
      * 实际开发中，根据不同的项目，设置不同的APP_ID，SELLER_ID，RSA_PRIVATE2
+     * 验证签名在客户端完成
      *
      * @param APP_ID
      * @param SELLER_ID
@@ -47,6 +49,16 @@ public class AliPayUtils {
         this.APP_ID = APP_ID;
         this.SELLER_ID = SELLER_ID;
         this.RSA_PRIVATE2 = RSA_PRIVATE2;
+        mActivity = new WeakReference<Activity>(activity);
+    }
+
+    /**
+     * 构造方法
+     * 验证签名已经在服务端完成
+     *
+     * @param activity
+     */
+    public AliPayUtils(Activity activity) {
         mActivity = new WeakReference<Activity>(activity);
     }
 
