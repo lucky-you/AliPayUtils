@@ -10,6 +10,10 @@ import com.cnsunrun.alipaylibrary.alipay.AliPayUtils;
 import com.cnsunrun.alipayutils.R;
 import com.cnsunrun.alipayutils.utils.ConstantValue;
 
+
+/**
+ * compile 'com.github.lucky-you:AliPayUtils:v1.0.7'
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
